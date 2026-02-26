@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import FeedbackForm from './components/FeedbackForm';
-import FeedbackList from './components/FeedbackList';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import FeedbackForm from "./components/FeedbackForm";
+import FeedbackList from "./components/FeedbackList";
+import "./App.css";
 
 function App() {
   const [feedbacks, setFeedbacks] = useState([]);
@@ -14,46 +14,46 @@ function App() {
 
   const fetchFeedbacks = async () => {
     try {
-      const response = await fetch('/api/feedback');
+      const response = await fetch("/api/feedback");
       const data = await response.json();
       setFeedbacks(data.feedbacks);
     } catch (error) {
-      console.error('Error fetching feedbacks:', error);
+      console.error("Error fetching feedbacks:", error);
     }
   };
 
   const handleSubmit = async (formData) => {
     try {
-      const response = await fetch('/api/feedback', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
       const data = await response.json();
       if (data.success) {
         fetchFeedbacks();
       }
     } catch (error) {
-      console.error('Error submitting feedback:', error);
+      console.error("Error submitting feedback:", error);
     }
   };
 
   const handleEdit = (feedback) => {
     setEditingId(feedback._id);
     setEditingData({
-      name: feedback.name,
-      email: feedback.email,
-      message: feedback.message,
-      rating: feedback.rating
+      name: feedback.userName,
+      email: feedback.userEmail,
+      message: feedback.userMessage,
+      rating: feedback.userRating,
     });
   };
 
   const handleUpdateSubmit = async (formData) => {
     try {
       const response = await fetch(`/api/feedback/${editingId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
       const data = await response.json();
       if (data.success) {
@@ -62,21 +62,21 @@ function App() {
         fetchFeedbacks();
       }
     } catch (error) {
-      console.error('Error updating feedback:', error);
+      console.error("Error updating feedback:", error);
     }
   };
 
   const handleDelete = async (id) => {
     try {
       const response = await fetch(`/api/feedback/${id}`, {
-        method: 'DELETE'
+        method: "DELETE",
       });
       const data = await response.json();
       if (data.success) {
         fetchFeedbacks();
       }
     } catch (error) {
-      console.error('Error deleting feedback:', error);
+      console.error("Error deleting feedback:", error);
     }
   };
 
@@ -86,7 +86,7 @@ function App() {
         <h1>Feedback System</h1>
       </header>
       <main className="App-main">
-        <FeedbackForm 
+        <FeedbackForm
           onSubmit={editingId ? handleUpdateSubmit : handleSubmit}
           initialData={editingData}
           isEditing={editingId !== null}
@@ -95,7 +95,7 @@ function App() {
             setEditingData(null);
           }}
         />
-        <FeedbackList 
+        <FeedbackList
           feedbacks={feedbacks}
           onEdit={handleEdit}
           onDelete={handleDelete}
