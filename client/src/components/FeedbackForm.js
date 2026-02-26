@@ -24,10 +24,10 @@ function FeedbackForm({ onSubmit, initialData, isEditing, onCancel }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    onSubmit(formData);
+    await onSubmit(formData);
     if (!isEditing) {
       setFormData({
         name: '',
@@ -96,7 +96,7 @@ function FeedbackForm({ onSubmit, initialData, isEditing, onCancel }) {
         </div>
 
         <div className="form-actions">
-          <button type="submit" className="btn-submit">
+          <button type="submit" className="btn-submit" disabled={isSubmitting}>
             {isSubmitting ? 'Submitting...' : isEditing ? 'Update' : 'Submit'}
           </button>
           {isEditing && (
