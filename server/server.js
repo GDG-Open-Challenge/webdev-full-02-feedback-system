@@ -53,7 +53,7 @@ app.post("/api/feedback", async (req, res) => {
 
 app.get("/api/feedback", async (req, res) => {
   try {
-    const feedbacks = await Feedback.find().sort({ createdAt: 1 });
+    const feedbacks = await Feedback.find().sort({ createdAt: -1 });
 
     res.json({
       success: true,
