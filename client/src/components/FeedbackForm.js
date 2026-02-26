@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import './FeedbackForm.css';
+import React, { useState, useEffect } from "react";
+import "./FeedbackForm.css";
 
 function FeedbackForm({ onSubmit, initialData, isEditing, onCancel }) {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-    rating: 5
+    name: "",
+    email: "",
+    message: "",
+    rating: 5,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -18,30 +18,43 @@ function FeedbackForm({ onSubmit, initialData, isEditing, onCancel }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (
+      !formData.name.trim() ||
+      !formData.email.trim() ||
+      !formData.message.trim() ||
+      !formData.rating
+    ) {
+      alert("All fields are required.");
+      return;
+    }
     setIsSubmitting(true);
-    onSubmit(formData);
-    if (!isEditing) {
-      setFormData({
-        name: '',
-        email: '',
-        message: '',
-        rating: 5
-      });
+    try {
+      await onSubmit(formData);
+      if (!isEditing) {
+        setFormData({
+          name: "",
+          email: "",
+          message: "",
+          rating: 5,
+        });
+      }
+    } catch (error) {
+      alert("Submission failed. Please try again.");
+      console.error(error);
     }
     setIsSubmitting(false);
   };
-
   return (
     <div className="feedback-form-container">
-      <h2>{isEditing ? 'Edit Feedback' : 'Submit Feedback'}</h2>
+      <h2>{isEditing ? "Edit Feedback" : "Submit Feedback"}</h2>
       <form onSubmit={handleSubmit} className="feedback-form">
         <div className="form-group">
           <label htmlFor="name">Name</label>
@@ -97,7 +110,7 @@ function FeedbackForm({ onSubmit, initialData, isEditing, onCancel }) {
 
         <div className="form-actions">
           <button type="submit" className="btn-submit">
-            {isSubmitting ? 'Submitting...' : isEditing ? 'Update' : 'Submit'}
+            {isSubmitting ? "Submitting..." : isEditing ? "Update" : "Submit"}
           </button>
           {isEditing && (
             <button type="button" className="btn-cancel" onClick={onCancel}>
