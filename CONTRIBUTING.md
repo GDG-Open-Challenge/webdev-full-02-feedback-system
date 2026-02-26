@@ -1,6 +1,6 @@
-# 🤝 Contributing to NovaBuy
+# 🤝 Contributing to Feedback Submission System
 
-Thank you for your interest in contributing! This project is a **debugging challenge** — your goal is to find and fix the 20 intentional bugs hidden in the codebase. Here's how to get started.
+Thank you for your interest in contributing! This project is a **debugging challenge** — your goal is to find and fix the 5 intentional bugs hidden in the codebase. Here's how to get started.
 
 ---
 
@@ -13,8 +13,8 @@ Click the **Fork** button in the top-right corner of the GitHub repo page. This 
 ### 2. Clone Your Fork
 
 ```bash
-git clone https://github.com/<your-username>/web-dev-challenge-1.git
-cd web-dev-challenge-1
+git clone https://github.com/<your-username>/webdev-full-02-feedback-system.git
+cd webdev-full-02-feedback-system
 ```
 
 ### 3. Add the Upstream Remote
@@ -22,7 +22,7 @@ cd web-dev-challenge-1
 Keep your fork synced with the original repo:
 
 ```bash
-git remote add upstream https://github.com/GDG-Open-Challenge/web-dev-challenge-1.git
+git remote add upstream https://github.com/GDG-Open-Challenge/webdev-full-02-feedback-system.git
 git fetch upstream
 ```
 
@@ -39,9 +39,9 @@ fix/issue-<number>-<short-description>
 **Examples:**
 
 ```bash
-git checkout -b fix/issue-1-cart-total-calculation
-git checkout -b fix/issue-4-search-case-sensitivity
-git checkout -b fix/issue-16-unicode-hidden-character
+git checkout -b fix/issue-1-submit-button-disabled
+git checkout -b fix/issue-2-data-structure-mismatch
+git checkout -b fix/issue-5-input-validation
 ```
 
 > [!IMPORTANT]
@@ -64,27 +64,35 @@ git checkout -b fix/issue-16-unicode-hidden-character
 
 ### Testing Locally
 
+1. **Setup the Backend:**
 ```bash
-# Option 1: Open directly
-open index.html
-
-# Option 2: Use a local server (recommended)
-python3 -m http.server 8080
-# Then visit http://localhost:8080
+cd server
+npm install
+# Start MongoDB first (mongod)
+npm start
 ```
+
+2. **Setup the Frontend (in a new terminal):**
+```bash
+cd client
+npm install
+npm start
+```
+
+The application will open at `http://localhost:3000` with the API running on `http://localhost:5000`
 
 ---
 
 ## 📝 Commit Message Convention
 
 Follow the [Conventional Commits](https://www.conventionalcommits.org/) standard:
-
+form): disable submit button during feedback submission (#1)"
+git commit -m "fix(api): standardize feedback field names between frontend and backend (#2)"
+git commit -m "fix(validation): add required field validation to feedback form (#5)"
 ```
-fix(scope): brief description of the fix (#issue-number)
-```
 
-**Examples:**
-
+> [!NOTE]
+> Scope should be the affected area: `form`, `api`, `database`, `styling`, `validation`, `sorting
 ```bash
 git commit -m "fix(cart): resolve total string concatenation by using numeric accumulator (#1)"
 git commit -m "fix(search): add case-insensitive comparison for product filtering (#4)"
@@ -100,7 +108,7 @@ git commit -m "fix(css): replace fixed pixel widths with responsive units in pro
 
 ### 1. Push Your Branch
 
-```bash
+```bashdev-full-02-feedback-system
 git push origin fix/issue-<number>-<description>
 ```
 
@@ -127,7 +135,7 @@ Every pull request **must** follow this exact structure. Copy this template and 
 | **Issue**         | #<number>                                    |
 | **Title**         | <Issue title>                                |
 | **Severity**      | 🟢 Low / 🟡 Medium / 🔴 High               |
-| **Category**      | Bug / UX / Accessibility / Performance       |
+| **Category**      | Bug / UX / Data Handling / Validation        |
 | **File(s)**       | `<file path>`                                |
 | **Function(s)**   | `<function name(s)>`                         |
 
@@ -153,9 +161,9 @@ is expected.>
 ### 🔬 Root Cause Analysis
 
 <Explain WHY the bug occurs at a technical level. Identify the exact code pattern,
-JavaScript behavior, CSS property, or logic error that causes the issue. This is
-the most important section — demonstrate that you understand the underlying cause,
-not just the symptom.>
+JavaScript behavior, state management issue, or data handling error that causes
+the issue. This is the most important section — demonstrate that you understand
+the underlying cause, not just the symptom.>
 
 ---
 
@@ -196,8 +204,8 @@ Describe how you tested your fix:
 - [ ] Confirmed no regressions — other features still work correctly
 - [ ] Tested on Chrome
 - [ ] Tested on Firefox or Safari
-- [ ] Tested on mobile viewport (≤480px)
-- [ ] Tested edge cases (e.g., empty cart, zero quantity, rapid clicks)
+- [ ] Tested form validation and submission flows
+- [ ] Tested with various inputs and edge cases
 
 **Test Evidence:**
 <Describe what you tested and what the results were. Screenshots are encouraged
@@ -236,11 +244,12 @@ Your pull request will be evaluated on:
 | Rule | Details |
 |------|---------|
 | **One bug per PR** | Don't bundle multiple fixes in a single pull request |
-| **No frameworks** | Keep it HTML, CSS, and vanilla JS only — no React, jQuery, Tailwind, etc. |
+| **React + Express stack** | Keep it to React (client), Express/Node.js (server), and MongoDB — no additional frameworks |
 | **Don't reformat code** | Fix only the bug; don't restructure, rename, or beautify the surrounding code |
-| **Don't add dependencies** | No npm packages, CDN libraries, or external tools |
-| **Test before submitting** | Verify your fix works in at least 2 browsers |
+| **Don't add dependencies** | No new npm packages unless absolutely necessary and pre-approved |
+| **Test before submitting** | Start both server and client, test the fix in the browser |
 | **Follow the PR template** | Every section must be filled out completely |
+| **Don't modify the bugs document** | Do not update ERRORS_DOCUMENT.md or README.md |
 
 ---
 
