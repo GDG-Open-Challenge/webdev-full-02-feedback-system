@@ -74,7 +74,7 @@ app.put('/api/feedback/:id', async (req, res) => {
   try {
     const { name, email, message, rating } = req.body;
     
-    const feedback = await Feedback.findByidAndupdate(
+    const feedback = await Feedback.findByIdAndUpdate(
       req.params.id,
       { name, email, message, rating },
       { new: true }
