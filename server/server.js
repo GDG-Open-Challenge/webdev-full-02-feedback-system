@@ -52,16 +52,16 @@ app.post('/api/feedback', async (req, res) => {
 
 app.get('/api/feedback', async (req, res) => {
   try {
-    const feedbacks = await Feedback.find().sort({ createdAt: 1 });
+    const feedbacks = await Feedback.find().sort({ createdAt: -1 });
     
     res.json({
       success: true,
       feedbacks: feedbacks.map(f => ({
         _id: f._id,
-        userName: f.name,
-        userEmail: f.email,
-        userFeedback: f.message,
-        userRating: f.rating,
+        name: f.name,        
+        email: f.email,
+        message: f.message,
+        rating: f.rating,
         createdAt: f.createdAt
       }))
     });
@@ -74,7 +74,7 @@ app.put('/api/feedback/:id', async (req, res) => {
   try {
     const { name, email, message, rating } = req.body;
     
-    const feedback = await Feedback.findByidAndupdate(
+    const feedback = await Feedback.findByIdAndUpdate(
       req.params.id,
       { name, email, message, rating },
       { new: true }
