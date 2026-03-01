@@ -10,11 +10,11 @@ function FeedbackList({ feedbacks, onEdit, onDelete }) {
           feedbacks.map(feedback => (
             <div key={feedback._id} className="feedback-item">
               <div className="feedback-header">
-                <h3>{feedback.userName}</h3>
-                <span className="rating">★ {feedback.userRating}/5</span>
+                <h3>{feedback.name}</h3>
+                <span className="rating">★ {feedback.rating}/5</span>
               </div>
-              <p className="email">{feedback.userEmail}</p>
-              <p className="message">{feedback.userFeedback}</p>
+              <p className="email">{feedback.email}</p>
+              <p className="message">{feedback.message}</p>
               <p className="timestamp">
                 {new Date(feedback.createdAt).toLocaleDateString()}
               </p>

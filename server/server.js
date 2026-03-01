@@ -58,10 +58,10 @@ app.get('/api/feedback', async (req, res) => {
       success: true,
       feedbacks: feedbacks.map(f => ({
         _id: f._id,
-        userName: f.name,
-        userEmail: f.email,
-        userFeedback: f.message,
-        userRating: f.rating,
+        name: f.name,        
+        email: f.email,
+        message: f.message,
+        rating: f.rating,
         createdAt: f.createdAt
       }))
     });
