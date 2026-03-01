@@ -9,6 +9,7 @@ function FeedbackForm({ onSubmit, initialData, isEditing, onCancel }) {
     rating: 5
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (initialData) {
@@ -24,20 +25,31 @@ function FeedbackForm({ onSubmit, initialData, isEditing, onCancel }) {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    onSubmit(formData);
+
+  
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
+
+
+  if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+    setError('All fields are required.');
+    return;
+  }
+
+  setIsSubmitting(true);
+  try {
+    await onSubmit(formData);
     if (!isEditing) {
-      setFormData({
-        name: '',
-        email: '',
-        message: '',
-        rating: 5
-      });
+      setFormData({ name: '', email: '', message: '', rating: 5 });
     }
+  } catch (err) {
+    setError('Submission failed. Please try again.');  
+  } finally {
     setIsSubmitting(false);
-  };
+  }
+};
+  
 
   return (
     <div className="feedback-form-container">
@@ -95,8 +107,9 @@ function FeedbackForm({ onSubmit, initialData, isEditing, onCancel }) {
           </select>
         </div>
 
+        {error && <p className="error-message" style={{ color: 'red' }}>{error}</p>}
         <div className="form-actions">
-          <button type="submit" className="btn-submit">
+          <button type="submit" className="btn-submit"  disabled={isSubmitting}>
             {isSubmitting ? 'Submitting...' : isEditing ? 'Update' : 'Submit'}
           </button>
           {isEditing && (
