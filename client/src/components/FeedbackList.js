@@ -16,7 +16,9 @@ function FeedbackList({ feedbacks, onEdit, onDelete }) {
               <p className="email">{feedback.email}</p>
               <p className="message">{feedback.message}</p>
               <p className="timestamp">
-                {new Date(feedback.createdAt).toLocaleDateString()}
+                {feedback.createdAt
+                  ? new Date(feedback.createdAt).toLocaleDateString()
+                  : "No date"}
               </p>
               <div className="feedback-actions">
                 <button
