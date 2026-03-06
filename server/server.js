@@ -79,6 +79,13 @@ app.put('/api/feedback/:id', async (req, res) => {
       { name, email, message, rating },
       { new: true }
     );
+
+    if (!feedback) {
+      return res.status(404).json({
+        success: false,
+        message: "Feedback not found"
+      });
+    }
     
     
     res.json({
