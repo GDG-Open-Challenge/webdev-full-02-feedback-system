@@ -25,7 +25,6 @@ function FeedbackForm({ onSubmit, initialData, isEditing, onCancel }) {
     }));
   };
 
-
   
   const handleSubmit = async (e) => {
   e.preventDefault();
@@ -109,6 +108,7 @@ function FeedbackForm({ onSubmit, initialData, isEditing, onCancel }) {
 
         {error && <p className="error-message" style={{ color: 'red' }}>{error}</p>}
         <div className="form-actions">
+
           <button type="submit" className="btn-submit"  disabled={isSubmitting}>
             {isSubmitting ? 'Submitting...' : isEditing ? 'Update' : 'Submit'}
           </button>
