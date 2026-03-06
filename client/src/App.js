@@ -13,14 +13,17 @@ function App() {
   }, []);
 
   const fetchFeedbacks = async () => {
-    try {
-      const response = await fetch('/api/feedback');
-      const data = await response.json();
-      setFeedbacks(data.feedbacks);
-    } catch (error) {
-      console.error('Error fetching feedbacks:', error);
-    }
-  };
+  try {
+    const response = await fetch('/api/feedback');
+    const data = await response.json();
+    const sortedFeedbacks = data.feedbacks.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+    setFeedbacks(sortedFeedbacks);
+  } catch (error) {
+    console.error('Error fetching feedbacks:', error);
+  }
+};
 
   const handleSubmit = async (formData) => {
     try {
